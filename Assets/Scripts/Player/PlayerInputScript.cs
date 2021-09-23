@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInputSCript : MonoBehaviour
+public class PlayerInputScript : MonoBehaviour
 {
-    PlayerMovementScript m_PlayerMovement;
+    PlayerMovementScript playerMover;
     float xMovement;
     bool jump;
 
     void Start()
     {
-        m_PlayerMovement = GetComponent<PlayerMovementScript>();
+       playerMover = GetComponent<PlayerMovementScript>();
     }
 
     void Update()
@@ -20,5 +20,6 @@ public class PlayerInputSCript : MonoBehaviour
         jump = Input.GetButtonDown("Jump");
 
         //On les envoit au joueur
+        playerMover.ReceiveInputs(xMovement, jump);
     }
 }
