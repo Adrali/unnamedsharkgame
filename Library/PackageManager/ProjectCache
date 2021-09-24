@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637679812516485750
-    m_Hash: 3606532961
+      ticks: 637679031681220965
+    m_Hash: 2515013177
   m_LockFileStatus:
     m_FilePath: C:/Users/googl/unity-workspace/unnamedsharkgame/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637679812516495758
-    m_Hash: 2169045942
+      ticks: 637679031752208332
+    m_Hash: 4193688565
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -643,6 +643,8 @@ m_PackageAssets:
         - 1.7.1
         - 1.8.0
         - 1.9.0
+        - 1.10.2
+        - 1.11.2
         - 2.0.0-preview.6
         - 2.0.0-preview.8
         - 2.0.0-preview.15
@@ -655,6 +657,8 @@ m_PackageAssets:
         - 2.1.0-preview.6
         compatible:
         - 1.9.0
+        - 1.10.2
+        - 1.11.2
         - 2.0.0-preview.6
         - 2.0.0-preview.8
         - 2.0.0-preview.15
@@ -3349,7 +3353,6 @@ m_PackageAssets:
         - 4.0.3
         - 5.0.0-pre.1
         - 5.0.0-pre.2
-        - 5.0.0
         compatible:
         - 4.0.3
         verified: 4.0.3
@@ -3431,7 +3434,6 @@ m_PackageAssets:
         - 4.0.2
         - 5.0.0-pre.1
         - 5.0.0-pre.2
-        - 5.0.0
         compatible:
         - 4.0.2
         verified: 4.0.2
