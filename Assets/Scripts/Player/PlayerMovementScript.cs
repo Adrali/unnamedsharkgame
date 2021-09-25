@@ -128,6 +128,7 @@ public class PlayerMovementScript : MonoBehaviour
         playerRigidbody.velocity = Vector2.right * playerRigidbody.velocity.x;
         jumpTimer = 0f;
         isJumping = true;
+        jumpToken = false;
     }
 
     void JumpModeOff()
