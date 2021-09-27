@@ -8,7 +8,7 @@ public class PlayerInputScript : MonoBehaviour
     private PlayerMovementScript playerMover;
     private float xMovement;
     private bool jump_i;
-    private bool jump_c;
+    private bool dash_i;
 
     //Initialisation : on a juste besoin de recuperer un script
     void Start()
@@ -21,7 +21,6 @@ public class PlayerInputScript : MonoBehaviour
     {
         xMovement = 0f;
         jump_i = false;
-        jump_c = false;
     }
 
     //On passe les updates a recuperer les inputs, d'ou l'interet de scripts separes :
@@ -31,9 +30,9 @@ public class PlayerInputScript : MonoBehaviour
         //On recupère les inputs
         xMovement = Input.GetAxisRaw("Horizontal");
         jump_i = Input.GetButtonDown("Jump");
-        jump_c = Input.GetButton("Jump");
+        dash_i = Input.GetButtonDown("Dash");
 
         //On les envoit au joueur
-        playerMover.ReceiveInputs(xMovement, jump_i, jump_c);
+        playerMover.ReceiveInputs(xMovement, jump_i, dash_i);
     }
 }
