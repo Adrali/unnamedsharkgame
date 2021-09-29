@@ -53,8 +53,12 @@
     <UnityVersion>2020.3.18f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Player\PlayerCombatScript.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovementScript.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInputScript.cs" />
+    <Compile Include="Assets\Scripts\Abstracts\APlayer.cs" />
+    <Compile Include="Assets\Scripts\Baddies\TrainingDummy.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
