@@ -16,6 +16,7 @@ public class TrainingDummy : MonoBehaviour, IDamageable
     public void TakeDamage(int damages)
     {
         healthPoints -= damages;
+        if (healthPoints <= 0) OnDeath();
     }
 
     void OnDeath()

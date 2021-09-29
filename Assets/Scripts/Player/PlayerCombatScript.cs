@@ -26,7 +26,7 @@ public class PlayerCombatScript : APlayer, IDamageable
     //Fait pour les calculs physiques
     private void FixedUpdate()
     {
-        
+        BootOnHead();
     }
 
     /// <summary>
@@ -39,6 +39,7 @@ public class PlayerCombatScript : APlayer, IDamageable
         {
             //On (essaye de) récupére(r) ce qu'on touche avec nos bottes
             baddieHit = Physics2D.Raycast(playerRigidbody.position, Vector2.down, bootReach, baddiesLayer);
+            Debug.DrawLine(playerRigidbody.position, playerRigidbody.position + Vector2.down * bootReach, Color.yellow);
             if(baddieHit.collider != null)
             {
                 //Si le truc récupéré implémente l'interface IDamageable, on lui fait des dégâts
