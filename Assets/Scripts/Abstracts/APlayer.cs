@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +23,7 @@ public abstract class APlayer : MonoBehaviour
     public LayerMask groundLayer; //Le layer utilise par le sol, pour check les collisions avec les plateformes
 
     //Initialisation des variables
-    private void Awake()
+    protected void Awake()
     {
         isGrounded = false;
         isBonked = false;
@@ -71,6 +72,6 @@ public abstract class APlayer : MonoBehaviour
     /// </summary>
     protected void LastXGetter()
     {
-        if (!isDashing) if ((int)xInput != 0) lastXInput = (int)xInput;
+        if (!isDashing && xInput != 0) lastXInput = Math.Sign(xInput);
     }
 }

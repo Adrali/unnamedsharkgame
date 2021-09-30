@@ -5,28 +5,36 @@ using UnityEngine;
 public class PlayerCombatScript : APlayer, IDamageable
 {
     //Constantes
-    private const int bootDamage = 5; //Dégâts infligés lorsqu'on aterrit sur un ennemi
-    private const float bootReach = 1.6f; //La "portée" de nos bottes pour toucher les ennemis directement en dessous de nous
+    private const int BootDamage = 5; //Dégâts infligés lorsqu'on aterrit sur un ennemi
+    private const float BootReach = 0.1f; //La "portée" de nos bottes pour toucher les ennemis directement en dessous de nous
+    private const float ThrowableReach = 0.6f; //La portée pour jeter un élément de l'environnement
 
     //Privates
     private Rigidbody2D playerRigidbody; //Le rigidbody de notre personnage, pour le faire bouger
+    private PlayerMovementScript playerMovement; //Le script de mouvement pour forcer le personnage à bouger
     private int healthPoints = 1; //Le nombre de points de vie dispo pour notre perso
-    private RaycastHit2D baddieHit; //Pour stocker les ennemis touches par un raycast
+    private Collider2D baddieHit; //Pour stocker les ennemis touches par les bottes
+    private Collider2D environmentHit; //Pour stocker les throwables qu'on touche
     private IDamageable baddieBody; //Pour stocker le component IDamageable du truc touche
 
     //Publique
     public LayerMask baddiesLayer; //Le layer utilisé pour les gens sur lesquels on peut taper
+    public LayerMask throwableLayer; //Le layer utilisé par les objets jetables dans l'environnement
 
     //Première méthode lancé
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
+
         playerRigidbody = GetComponent<Rigidbody2D>();
+        playerMovement = GetComponent<PlayerMovementScript>();
     }
 
     //Fait pour les calculs physiques
     private void FixedUpdate()
     {
         BootOnHead();
+        ThrowingStuff();
     }
 
     /// <summary>
@@ -34,18 +42,36 @@ public class PlayerCombatScript : APlayer, IDamageable
     /// </summary>
     private void BootOnHead()
     {
-        //On doit être en l'air, mais surtout en chute libre
-        if(!isGrounded && !isDashing && !isJumping)
+        //On doit être en chute libre
+        if(playerRigidbody.velocity.y < 0)
         {
             //On (essaye de) récupére(r) ce qu'on touche avec nos bottes
-            baddieHit = Physics2D.Raycast(playerRigidbody.position, Vector2.down, bootReach, baddiesLayer);
-            Debug.DrawLine(playerRigidbody.position, playerRigidbody.position + Vector2.down * bootReach, Color.yellow);
-            if(baddieHit.collider != null)
+            baddieHit = Physics2D.OverlapArea(playerBackFeet.position, playerFrontFeet.position + Vector3.down * BootReach, baddiesLayer);
+            if(baddieHit != null)
             {
                 //Si le truc récupéré implémente l'interface IDamageable, on lui fait des dégâts
-                baddieBody = baddieHit.collider.gameObject.GetComponent<IDamageable>();
-                if (baddieBody != null) baddieBody.TakeDamage(bootDamage);
+                baddieBody = baddieHit.gameObject.GetComponent<IDamageable>();
+                if (baddieBody != null)
+                {
+                    baddieBody.TakeDamage(BootDamage);
+                    playerMovement.ForceJump();
+                }
             }
+        }
+    }
+
+    /// <summary>
+    /// Utilise pour detecter et lancer les elements de l'environnement
+    /// </summary>
+    private void ThrowingStuff()
+    {
+        //On cherche les jetables autour de nous
+        environmentHit = Physics2D.OverlapArea(playerBackFeet.position + Vector3.left * ThrowableReach, playerFrontHead.position + Vector3.right * ThrowableReach, throwableLayer);
+        //Si on en trouve un, on le lance !
+        if (environmentHit != null)
+        {
+            environmentHit.gameObject.GetComponent<IThrowable>().getThrown(playerRigidbody.position.x, playerMovement.getCurrentSpeed());
+            if (playerRigidbody.velocity.y < 0) playerMovement.ForceJump();
         }
     }
 

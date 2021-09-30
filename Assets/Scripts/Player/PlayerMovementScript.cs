@@ -24,8 +24,10 @@ public class PlayerMovementScript : APlayer
     private float jumpTimer, jumpForgivenessTimer; //Pour decompter le temps passe en saut, et le temps d'acceptation
 
     //On awake avec nos initialisations pour eviter les erreurs
-    void Awake()
+    private new void Awake()
     {
+        base.Awake();
+
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerRigidbody.gravityScale = GravityOn;
 
@@ -40,7 +42,7 @@ public class PlayerMovementScript : APlayer
     }
 
     //On recupere les infos physiques, puis on s'en sert pour faire des actions
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         //On check les differentes variables utiles
         GroundChecker();
@@ -239,5 +241,23 @@ public class PlayerMovementScript : APlayer
         xInput = xMovement;
         if (jump_i) jumpInput = true;
         if (dash_i) dashInput = true;
+    }
+
+    /// <summary>
+    /// Peut être utilisé par les autres scripts pour forcer le personnage à sauter
+    /// </summary>
+    public void ForceJump()
+    {
+        JumpModeOn();
+    }
+
+    /// <summary>
+    /// Ask the movement script how fast the character is going
+    /// </summary>
+    /// <returns>La vitesse actuelle du personnage</returns>
+    public float getCurrentSpeed()
+    {
+        if (isDashing) return DashForce;
+        else return Speed;
     }
 }
