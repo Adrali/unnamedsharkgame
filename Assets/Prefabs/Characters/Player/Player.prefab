@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2128513389530680267}
   - component: {fileID: 2128513389530680266}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2128513389573514625}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Back Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,7 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2128513390207661636}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Front Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2128513390247365498}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Front Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,8 @@ GameObject:
   - component: {fileID: 2128513390396228143}
   - component: {fileID: 2128513390396228144}
   - component: {fileID: 2128513390396228145}
-  m_Layer: 0
+  - component: {fileID: 6865190906435378660}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2128513390396228149}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.5, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2128513389530680267}
@@ -290,6 +291,31 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &6865190906435378660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2128513390396228149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9925e36c9faad1444907f5ef13b546b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBackFeet: {fileID: 2128513390826045595}
+  playerFrontFeet: {fileID: 2128513390207661636}
+  playerBackHead: {fileID: 2128513389573514625}
+  playerFrontHead: {fileID: 2128513390247365498}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  baddiesLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  throwableLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &2128513390826045596
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2128513390826045595}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Back Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,7 +357,7 @@ GameObject:
   - component: {fileID: 2128513391295181660}
   - component: {fileID: 2128513391295181661}
   - component: {fileID: 2128513391295181662}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -346,7 +372,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2128513391295181663}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2128513390396228148}
@@ -379,7 +405,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
