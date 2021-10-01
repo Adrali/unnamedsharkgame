@@ -11,7 +11,6 @@ public class Bouncy : AThrowable
 
         speedMultiplier = 0.85f;
         damages = 1;
-        impulseSpeed = 0.2f;
     }
 
     /// <summary>

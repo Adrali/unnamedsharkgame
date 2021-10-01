@@ -6,16 +6,15 @@ public class PlayerCombatScript : APlayer, IDamageable
 {
     //Constantes
     private const int BootDamage = 5; //Dégâts infligés lorsqu'on aterrit sur un ennemi
-    private const float BootReach = 0.1f; //La "portée" de nos bottes pour toucher les ennemis directement en dessous de nous
-    private const float ThrowableReach = 0.6f; //La portée pour jeter un élément de l'environnement
 
     //Privates
     private Rigidbody2D playerRigidbody; //Le rigidbody de notre personnage, pour le faire bouger
     private PlayerMovementScript playerMovement; //Le script de mouvement pour forcer le personnage à bouger
     private int healthPoints = 1; //Le nombre de points de vie dispo pour notre perso
     private Collider2D baddieHit; //Pour stocker les ennemis touches par les bottes
-    private Collider2D environmentHit; //Pour stocker les throwables qu'on touche
+    private Collider2D throwableHit; //Pour stocker les throwables qu'on touche
     private IDamageable baddieBody; //Pour stocker le component IDamageable du truc touche
+    private IThrowable throwableBody; //Pour stocker le component IThrowable du truc touche
 
     //Publique
     public LayerMask baddiesLayer; //Le layer utilisé pour les gens sur lesquels on peut taper
@@ -46,7 +45,7 @@ public class PlayerCombatScript : APlayer, IDamageable
         if(playerRigidbody.velocity.y < 0)
         {
             //On (essaye de) récupére(r) ce qu'on touche avec nos bottes
-            baddieHit = Physics2D.OverlapArea(playerBackFeet.position, playerFrontFeet.position + Vector3.down * BootReach, baddiesLayer);
+            baddieHit = Physics2D.OverlapArea(playerBackFeet.position, playerFrontFeet.position + Vector3.down * CheckingRadius, baddiesLayer);
             if(baddieHit != null)
             {
                 //Si le truc récupéré implémente l'interface IDamageable, on lui fait des dégâts
@@ -66,12 +65,19 @@ public class PlayerCombatScript : APlayer, IDamageable
     private void ThrowingStuff()
     {
         //On cherche les jetables autour de nous
-        environmentHit = Physics2D.OverlapArea(playerBackFeet.position + Vector3.left * ThrowableReach, playerFrontHead.position + Vector3.right * ThrowableReach, throwableLayer);
+        throwableHit = Physics2D.OverlapArea(playerBackFeet.position + (Vector3.left + Vector3.down) * CheckingRadius, playerFrontHead.position + (Vector3.up + Vector3.right) * CheckingRadius, throwableLayer);
         //Si on en trouve un, on le lance !
-        if (environmentHit != null)
+        if (throwableHit != null)
         {
-            environmentHit.gameObject.GetComponent<IThrowable>().getThrown(playerRigidbody.position.x, playerMovement.getCurrentSpeed());
-            if (playerRigidbody.velocity.y < 0) playerMovement.ForceJump();
+            //Si l'objet a la bonne interface...
+            throwableBody = throwableHit.gameObject.GetComponent<IThrowable>();
+            if(throwableBody != null)
+            {
+                //... on peut le jeter
+                if (playerRigidbody.velocity.y < 0) playerMovement.ForceJump();
+                throwableBody.getThrown(playerRigidbody.position.x, playerMovement.getCurrentSpeed());
+            }
+            
         }
     }
 
@@ -88,7 +94,7 @@ public class PlayerCombatScript : APlayer, IDamageable
     /// <summary>
     /// Quoi faire quand le personnage meurt
     /// </summary>
-    void OnDeath()
+    private void OnDeath()
     {
         //A FAIRE PTDR
     }

@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class APlayer : MonoBehaviour
 {
     //Constantes
-    protected const float GroundCheckingRadius = .12f; //Rayon du cercle dans lequel on cherche des collisions avec le sol
+    protected const float CheckingRadius = .1f; //Rayon du cercle dans lequel on cherche des collisions avec le sol
 
     //Protected
     protected Collider2D[] groundColliders, bonkColliders; //Les colliders que le joueur touche (ou non) avec ses pieds, touche (ou non) avec sa tete, touche (ou non) avec son corps
@@ -39,11 +39,11 @@ public abstract class APlayer : MonoBehaviour
     protected void GroundChecker()
     {
         //On regarde si on a des collisions avec le sol sous le premier pied...
-        groundColliders = Physics2D.OverlapCircleAll(playerBackFeet.position, GroundCheckingRadius, groundLayer);
+        groundColliders = Physics2D.OverlapCircleAll(playerBackFeet.position, CheckingRadius, groundLayer);
         if (groundColliders.Length == 0)
         {
             //...puis sous le deuxième si on a rien trouvé
-            groundColliders = Physics2D.OverlapCircleAll(playerFrontFeet.position, GroundCheckingRadius, groundLayer);
+            groundColliders = Physics2D.OverlapCircleAll(playerFrontFeet.position, CheckingRadius, groundLayer);
             if (groundColliders.Length == 0) isGrounded = false;
             else isGrounded = true;
         }
@@ -56,11 +56,11 @@ public abstract class APlayer : MonoBehaviour
     protected void BonkChecker()
     {
         //On regarde si on a des collisions avec le plafond à l'avant de la tête...
-        bonkColliders = Physics2D.OverlapCircleAll(playerBackHead.position, GroundCheckingRadius, groundLayer);
+        bonkColliders = Physics2D.OverlapCircleAll(playerBackHead.position, CheckingRadius, groundLayer);
         if (bonkColliders.Length == 0)
         {
             //... puis on vérifie l'arrière de la tête si on a rien trouvé
-            bonkColliders = Physics2D.OverlapCircleAll(playerFrontHead.position, GroundCheckingRadius, groundLayer);
+            bonkColliders = Physics2D.OverlapCircleAll(playerFrontHead.position, CheckingRadius, groundLayer);
             if (bonkColliders.Length == 0) isBonked = false;
             else isBonked = true;
         }

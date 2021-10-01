@@ -14,13 +14,8 @@ public abstract class AThrowable : MonoBehaviour, IThrowable
     protected float throwSpeed; //A quelle vitesse on va
     protected float speedMultiplier; //Demultiplicateur de vitesse, dépend du type de throwable
     protected int damages; //Dégâts infligés par un poke
-    protected float impulseSpeed; //Longueur du déplacement lors de l'impulse
-    protected Rigidbody2D objectRigidbody; //Le rigidbody de l'objet, pour le déplacer
+    protected Rigidbody2D throwableRigidbody; //Le rigidbody de l'objet, pour le déplacer
     protected RaycastHit2D pokedObject; //Pour stocker les objets dans lesquels on rebondi
-
-    //Public
-    public Transform upPoint, downPoint; //Le point en haut (au milieu) du throwable, pareil pour le bas
-    public LayerMask pokableLayers; //Les masques sur lesquels on peut interagir
 
     //Initialisation
     protected void Awake()
@@ -29,8 +24,8 @@ public abstract class AThrowable : MonoBehaviour, IThrowable
         direction = 0;
         throwSpeed = 0f;
 
-        objectRigidbody = gameObject.GetComponent<Rigidbody2D>();
-        objectRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        throwableRigidbody = gameObject.GetComponent<Rigidbody2D>();
+        throwableRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     private void FixedUpdate()
@@ -40,28 +35,16 @@ public abstract class AThrowable : MonoBehaviour, IThrowable
 
     private void ThrownMover()
     {
-        objectRigidbody.velocity = new Vector2(direction * throwSpeed * Time.fixedDeltaTime, objectRigidbody.velocity.y);
-
-        CollisionChecker();
+        throwableRigidbody.velocity = new Vector2(direction * throwSpeed * Time.fixedDeltaTime, throwableRigidbody.velocity.y);
     }
 
-    private void CollisionChecker()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        pokedObject = Physics2D.Raycast(upPoint.position, upPoint.position + Vector3.right * direction * PokeLength, pokableLayers);
-        if(pokedObject.collider != null)
+        if (thrown)
         {
-            if (pokedObject.collider.GetComponent<IDamageable>() != null) pokedObject.collider.GetComponent<IDamageable>().TakeDamage(damages);
+            if (collision.GetComponent<IDamageable>() != null) collision.GetComponent<IDamageable>().TakeDamage(damages);
+            else if (collision.GetComponent<IThrowable>() != null) collision.GetComponent<IThrowable>().getThrown(throwableRigidbody.position.x, throwSpeed);
             OnPoke();
-        }
-        else
-        {
-            pokedObject = Physics2D.Raycast(downPoint.position, downPoint.position + Vector3.right * direction * PokeLength, pokableLayers);
-            if (pokedObject.collider != null)
-            {
-                if (pokedObject.collider.GetComponent<IDamageable>() != null) pokedObject.collider.GetComponent<IDamageable>().TakeDamage(damages);
-                OnPoke();
-            }
         }
     }
 
@@ -70,13 +53,15 @@ public abstract class AThrowable : MonoBehaviour, IThrowable
         if(!thrown)
         {
             thrown = true;
-            direction = Math.Sign(objectRigidbody.position.x - xThrower);
+            direction = Math.Sign(throwableRigidbody.position.x - xThrower);
             throwSpeed = throwerSpeed * speedMultiplier;
 
-            objectRigidbody.constraints = RigidbodyConstraints2D.None;
-            objectRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+            throwableRigidbody.constraints = RigidbodyConstraints2D.None;
+            throwableRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-            objectRigidbody.velocity = new Vector2(direction * impulseSpeed, objectRigidbody.velocity.y);
+            //On déplace tout de suite de 3 frames pour l'éloigner de ce qui vient d'activer sa collision
+            ThrownMover();
+            ThrownMover();
             ThrownMover();
         }
     }
