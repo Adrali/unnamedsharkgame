@@ -9,7 +9,7 @@ public class Bouncy : AThrowable
     {
         base.Awake();
 
-        speedMultiplier = 0.85f;
+        speedMultiplier = 0.666f;
         damages = 1;
     }
 

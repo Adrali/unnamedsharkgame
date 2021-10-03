@@ -56,13 +56,13 @@
     <Compile Include="Assets\Scripts\Player\PlayerCombatScript.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovementScript.cs" />
     <Compile Include="Assets\Scripts\Baddies\TrainingDummy.cs" />
+    <Compile Include="Assets\Scripts\Environment\Breaky.cs" />
     <Compile Include="Assets\Scripts\Abstracts\APlayer.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\IDamageable.cs" />
-    <Compile Include="Assets\Scripts\Player\PlayerInputScript.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\IThrowable.cs" />
     <Compile Include="Assets\Scripts\Abstracts\AThrowable.cs" />
     <Compile Include="Assets\Scripts\Environment\Bouncy.cs" />
-    <Compile Include="Assets\Scripts\Environment\Breaky.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IThrowable.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IDamageable.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerInputScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

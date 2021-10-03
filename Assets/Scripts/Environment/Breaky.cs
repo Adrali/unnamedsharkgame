@@ -9,7 +9,7 @@ public class Breaky : AThrowable
     {
         base.Awake();
 
-        speedMultiplier = 1.15f;
+        speedMultiplier = 1.50f;
         damages = 2;
     }
 
