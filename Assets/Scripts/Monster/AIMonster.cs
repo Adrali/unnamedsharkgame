@@ -5,11 +5,14 @@ using UnityEngine;
 public class AIMonster : MonoBehaviour
 {
     public Transform bottomArea;
-    public Collider2D frontCollider;
+    public GameObject frontColliderObject;
     public bool checkBottom = true;
     public LayerMask groundLayer;
+    public LayerMask collisionLayer;
+
+
     Rigidbody2D m_Rigidbody;
-    float m_Speed = 1.0f;
+    float m_Speed = 3.0f;
     Vector2 sens =new Vector2(1.0f, 0);
 
     private bool IsInLayerMask(GameObject obj, LayerMask layerMask)
@@ -23,21 +26,31 @@ public class AIMonster : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody2D>();
     }
 
+    private void flipMob()
+    {
+        sens *= -1;
+        Vector3 localScale = frontColliderObject.transform.localPosition;
+        localScale.x *= -1;
+        frontColliderObject.transform.localPosition = localScale;
+        localScale = bottomArea.localPosition;
+        localScale.x *= -1;
+        bottomArea.localPosition = localScale;
+       
+    }
     // Update is called once per frame
     void Update()
     {
-        /*if (Physics2D.OverlapCollider(frontCollider, null, null))
+        if (!Physics2D.OverlapCircle(bottomArea.position, 0.5f,groundLayer))
         {
-            gameObject.transform.Rotate(0, 0, 180, Space.World);
-        }*/
+            flipMob();
+        }
         m_Rigidbody.velocity = sens * m_Speed;
         //Debug.Log("Vitesse : " + transform.forward * m_Speed);
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (IsInLayerMask(col.gameObject, groundLayer))
-            sens *= -1;
-            gameObject.transform.Rotate(0, 180, 0, Space.World);
+        if (IsInLayerMask(col.gameObject, collisionLayer))
+            flipMob();
     }
 }
