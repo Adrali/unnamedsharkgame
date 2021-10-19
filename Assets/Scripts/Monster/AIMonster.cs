@@ -9,11 +9,14 @@ public class AIMonster : MonoBehaviour
     public bool checkBottom = true;
     public LayerMask groundLayer;
     public LayerMask collisionLayer;
+    public LayerMask playerLayers;
+
 
 
     Rigidbody2D m_Rigidbody;
     float m_Speed = 3.0f;
-    Vector2 sens =new Vector2(1.0f, 0);
+    Vector2 sens = new Vector2(1.0f, 0);
+    bool isMoving = true;
 
     private bool IsInLayerMask(GameObject obj, LayerMask layerMask)
     {
@@ -44,7 +47,10 @@ public class AIMonster : MonoBehaviour
         {
             flipMob();
         }
-        m_Rigidbody.velocity = sens * m_Speed;
+        if (isMoving)
+        {
+            m_Rigidbody.velocity = sens * m_Speed;
+        }
         //Debug.Log("Vitesse : " + transform.forward * m_Speed);
     }
 
@@ -52,5 +58,15 @@ public class AIMonster : MonoBehaviour
     {
         if (IsInLayerMask(col.gameObject, collisionLayer))
             flipMob();
+        else if (IsInLayerMask(col.gameObject, playerLayers))
+            isMoving = false;
+            m_Rigidbody.velocity = new Vector2(0.0f,0.0f);
+
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (IsInLayerMask(col.gameObject, playerLayers))
+            isMoving = true;
+
     }
 }
