@@ -8,6 +8,7 @@ public class PlayerCombatScript : APlayer, IDamageable
     private const int BootDamage = 5; //Dégâts infligés lorsqu'on aterrit sur un ennemi
 
     //Privates
+    private bool fireInput;
     private Rigidbody2D playerRigidbody; //Le rigidbody de notre personnage, pour le faire bouger
     private PlayerMovementScript playerMovement; //Le script de mouvement pour forcer le personnage à bouger
     private int healthPoints = 1; //Le nombre de points de vie dispo pour notre perso
@@ -15,25 +16,31 @@ public class PlayerCombatScript : APlayer, IDamageable
     private Collider2D throwableHit; //Pour stocker les throwables qu'on touche
     private IDamageable baddieBody; //Pour stocker le component IDamageable du truc touche
     private IThrowable throwableBody; //Pour stocker le component IThrowable du truc touche
+    private AWeapon currentGun;
 
     //Publique
     public LayerMask baddiesLayer; //Le layer utilisé pour les gens sur lesquels on peut taper
     public LayerMask throwableLayer; //Le layer utilisé par les objets jetables dans l'environnement
+    public GameObject bulletPrefab;
 
     //Première méthode lancé
     private new void Awake()
     {
         base.Awake();
 
+        fireInput = false;
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovementScript>();
+        currentGun = GetComponent<AWeapon>();
     }
 
     //Fait pour les calculs physiques
     private void FixedUpdate()
     {
+        LastXGetter();
         BootOnHead();
         ThrowingStuff();
+        currentGun.ReceiveInputs(fireInput, lastXInput);
     }
 
     /// <summary>
@@ -82,6 +89,16 @@ public class PlayerCombatScript : APlayer, IDamageable
     }
 
     /// <summary>
+    /// Recoit les inputs du script d'input
+    /// </summary>
+    /// <param name="fire">Input de tir</param>
+    public void ReceiveInputs(bool fire, float xI)
+    {
+        fireInput = fire;
+        xInput = xI;
+    }
+
+    /// <summary>
     /// Comment infliger des dégâts à notre personnage
     /// </summary>
     /// <param name="damages">Quantité de dégâts à infliger</param>
@@ -90,6 +107,8 @@ public class PlayerCombatScript : APlayer, IDamageable
         healthPoints -= damages;
         if (healthPoints <= 0) OnDeath();
     }
+
+    public GameObject getBulletPrefab() => bulletPrefab;
 
     /// <summary>
     /// Quoi faire quand le personnage meurt

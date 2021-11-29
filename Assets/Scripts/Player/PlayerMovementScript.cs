@@ -6,11 +6,11 @@ public class PlayerMovementScript : APlayer
 {
     //Constantes
     private const float Speed = 535f; //Vitesse des mouvements du personnage
-    private const float DashForce = 1765f; //"Puissance" du dash du personnage
+    private const float DashForce = 1775f; //"Puissance" du dash du personnage
     private const float JumpForce = 575f; //"Puissance" du saut du personnage
     private const float GravityOn = 6.6f, GravityOff = 0f; //La force de la gravite, en dehors d'un saut et durant un saut respectivement
     private const float InputLength = 0.1f; //Durée courte pour une action, standardisee
-    private const float DashTotalCooldown = 0.66f; //Il faut attendre au moins ce temps la entre 2 dash
+    private const float DashTotalCooldown = 1.25f; //Il faut attendre au moins ce temps la entre 2 dash
 
     //Privates
     private Rigidbody2D playerRigidbody; //Le rigidbody de notre personnage, pour le faire bouger

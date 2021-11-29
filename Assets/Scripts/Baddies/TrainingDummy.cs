@@ -21,6 +21,6 @@ public class TrainingDummy : MonoBehaviour, IDamageable
 
     void OnDeath()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
