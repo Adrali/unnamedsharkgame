@@ -18,6 +18,6 @@ public class Breaky : AThrowable
     /// </summary>
     protected override void OnPoke()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }

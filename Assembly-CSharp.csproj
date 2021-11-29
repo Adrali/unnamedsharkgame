@@ -47,7 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.11</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.12</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2020.3.18f1</UnityVersion>
@@ -63,6 +63,11 @@
     <Compile Include="Assets\Scripts\Interfaces\IThrowable.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInputScript.cs" />
+    <Compile Include="Assets\Scripts\Abstracts\AWeapon.cs" />
+    <Compile Include="Assets\Scripts\Weapons\BulletScript.cs" />
+    <Compile Include="Assets\Scripts\Weapons\PistolScript.cs" />
+    <Compile Include="Assets\Scripts\Weapons\SMGScript.cs" />
+    <Compile Include="Assets\Scripts\Weapons\ShotgunScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
