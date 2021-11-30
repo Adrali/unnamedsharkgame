@@ -25,6 +25,7 @@ public abstract class AWeapon : MonoBehaviour
         else if (shootInput)
         {
             Shoot();
+            playerCombat.Recoil();
             shootTimer = shootDelay;
         }
     }

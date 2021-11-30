@@ -135,8 +135,16 @@ public class PlayerCombatScript : APlayer, IDamageable
     {
         bulletProofVest = true;
         Destroy(GetComponent<AWeapon>());
-        if (guntype == 1) currentGun = gameObject.AddComponent<ShotgunScript>();
-        else currentGun = gameObject.AddComponent<SMGScript>();
+        if (guntype == 1)
+        {
+            currentGun = gameObject.AddComponent<SMGScript>();
+            animScript.SetArme(guntype);
+        }
+        else
+        {
+            currentGun = gameObject.AddComponent<ShotgunScript>();
+            animScript.SetArme(guntype);
+        }
 
         ui.AddScore(20);
     }
@@ -145,10 +153,16 @@ public class PlayerCombatScript : APlayer, IDamageable
     {
         Destroy(GetComponent<AWeapon>());
         currentGun = gameObject.AddComponent<PistolScript>();
+        animScript.SetArme(0);
     }
 
     public void SetAmmo(int ammo)
     {
         ui.SetMunition(ammo);
+    }
+
+    public void Recoil()
+    {
+        animScript.SetAttack(true);
     }
 }

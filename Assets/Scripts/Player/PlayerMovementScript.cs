@@ -22,6 +22,7 @@ public class PlayerMovementScript : APlayer
     private float dashTimer, dashCooldown, dashForgivenessTimer; //Utilise pour chronometrer le dash en cours, faire revenir le dash et faire la tolerance du dash, respectivement
     private bool jumpForgiveness; //Indique si le joueur est dans l'algo d'acceptance
     private float jumpTimer, jumpForgivenessTimer; //Pour decompter le temps passe en saut, et le temps d'acceptation
+    GameObject body;
 
     //On awake avec nos initialisations pour eviter les erreurs
     private new void Awake()
@@ -39,6 +40,7 @@ public class PlayerMovementScript : APlayer
         isJumping = false;
         jumpForgiveness = false;
         jumpTimer = 0f; jumpForgivenessTimer = 0f;
+        body = GameObject.Find("/Player/Body");
     }
 
     //On recupere les infos physiques, puis on s'en sert pour faire des actions
@@ -46,8 +48,11 @@ public class PlayerMovementScript : APlayer
     {
         //On check les differentes variables utiles
         GroundChecker();
+        if (!isGrounded) animScript.SetSaut(true);
+        else animScript.SetSaut(false);
         BonkChecker();
         LastXGetter();
+        body.transform.localScale = new Vector3(lastXInput * 0.55f, 0.55f, 1f);
         DashTokenizer();
         JumpTokenizer();
 
@@ -115,6 +120,7 @@ public class PlayerMovementScript : APlayer
         //On gère le déplacement quand on est en train de dasher
         if (isDashing)
         {
+            animScript.SetAdvance(true);
             //Le dash ne dure pas longtemps...
             if (dashTimer > InputLength) DashModeOff();
             else
@@ -156,6 +162,8 @@ public class PlayerMovementScript : APlayer
     {
         //On peut pas bouger si on est en train de dasher
         if(!isDashing) playerRigidbody.velocity = new Vector2(xInput * Time.fixedDeltaTime * Speed, playerRigidbody.velocity.y);
+        if (xInput != 0) animScript.SetAdvance(true);
+        else animScript.SetAdvance(false);
     }
     
     /// <summary>
@@ -219,6 +227,7 @@ public class PlayerMovementScript : APlayer
         jumpTimer = 0f;
         isJumping = true;
         if(!isGrounded) jumpToken = false;
+        animScript.SetSaut(true);
     }
 
     /// <summary>

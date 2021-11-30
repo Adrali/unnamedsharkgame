@@ -10,7 +10,7 @@ public class AmmoCrate : MonoBehaviour
     {
         if((playerLayer.value & (1 << collision.gameObject.layer)) > 0)
         {
-            collision.GetComponent<PlayerCombatScript>().SwitchGun(Random.Range(0, 2));
+            collision.GetComponent<PlayerCombatScript>().SwitchGun(Random.Range(1, 3));
             Destroy(gameObject);
         }
     }

@@ -16,6 +16,7 @@ public abstract class APlayer : MonoBehaviour
     protected bool isJumping; //Indique si le joueur est actuellement en train de sauter ou non
     protected float xInput; //Input A/D
     protected int lastXInput; //Memorise le dernier input horizontal, si celui-ci est different de 0
+    protected ArmeChanger animScript;
 
     //Publics
     public Transform playerBackFeet, playerFrontFeet; //Bas du sprite, pour check contact avec le sol. On en a 2, un pour l'avant et l'autre pour l'arriere
@@ -31,6 +32,7 @@ public abstract class APlayer : MonoBehaviour
         isJumping = false;
         xInput = 0f;
         lastXInput = 1;
+        animScript = GetComponentInChildren<ArmeChanger>();
     }
 
     /// <summary>

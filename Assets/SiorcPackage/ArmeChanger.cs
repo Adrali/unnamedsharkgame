@@ -65,35 +65,7 @@ public class ArmeChanger : MonoBehaviour
 
         targetResolver.SetCategoryAndLabel(targetCategory, label);
 
-        ArmeObject = GameObject.Find("/Siorc/Arme");
-
-
-
-        if (Input.GetKeyDown("space"))
-        {
-            Attack = true;
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            Arme++;
-            if (Arme == 3)
-                Arme = 0;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            Advance = !Advance;
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            Saut = true;
-        }
-        if (Input.GetKeyUp(KeyCode.UpArrow))
-        {
-            Saut = false;
-        }
-
-
+        ArmeObject = GameObject.Find("Arme");
 
         if (lastWeapon != Arme)
         {
@@ -155,5 +127,25 @@ public class ArmeChanger : MonoBehaviour
         {
             SiorcAnim.SetBool("Saut", false);
         }
+    }
+
+    public void SetSaut(bool s)
+    {
+        Saut = s;
+    }
+
+    public void SetArme(int a)
+    {
+        Arme = a;
+    }
+
+    public void SetAdvance(bool a)
+    {
+        Advance = a;
+    }
+
+    public void SetAttack(bool a)
+    {
+        Attack = a;
     }
 }
