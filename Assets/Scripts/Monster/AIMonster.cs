@@ -11,12 +11,21 @@ public class AIMonster : MonoBehaviour
     public LayerMask collisionLayer;
     public LayerMask playerLayers;
 
-
-
     Rigidbody2D m_Rigidbody;
     float m_Speed = 3.0f;
     Vector2 sens = new Vector2(1.0f, 0);
     bool isMoving = true;
+    bool isAttacking;
+    float countdownTimer, attackTimer;
+    Collider2D target;
+
+    private void Awake()
+    {
+        isAttacking = false;
+        countdownTimer = 0f;
+        attackTimer = 1f;
+        target = null;
+    }
 
     private bool IsInLayerMask(GameObject obj, LayerMask layerMask)
     {
@@ -43,30 +52,53 @@ public class AIMonster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Physics2D.OverlapCircle(bottomArea.position, 0.5f,groundLayer))
+        if (!Physics2D.OverlapCircle(bottomArea.position, 0.1f,groundLayer))
         {
             flipMob();
         }
-        if (isMoving)
+        if (isAttacking)
+        {
+            m_Rigidbody.velocity = Vector2.zero;
+            if (countdownTimer <= 0)
+            {
+                isAttacking = false;
+                Attack();
+            }
+            else countdownTimer -= Time.deltaTime;
+        }
+        else if (isMoving)
         {
             m_Rigidbody.velocity = sens * m_Speed;
         }
-        //Debug.Log("Vitesse : " + transform.forward * m_Speed);
+
+    }
+
+    void Attack()
+    {
+        target = Physics2D.OverlapCircle(frontColliderObject.transform.position, 1.5f, playerLayers);
+        if (target != null)
+        {
+            target.GetComponent<PlayerCombatScript>().TakeDamage(1);
+            isAttacking = true;
+            countdownTimer = attackTimer;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (IsInLayerMask(col.gameObject, collisionLayer))
-            flipMob();
+        if (IsInLayerMask(col.gameObject, collisionLayer)) flipMob();
         else if (IsInLayerMask(col.gameObject, playerLayers))
+        {
             isMoving = false;
-            m_Rigidbody.velocity = new Vector2(0.0f,0.0f);
+            isAttacking = true;
+            countdownTimer = attackTimer;
+        }
+        m_Rigidbody.velocity = new Vector2(0.0f,0.0f);
 
     }
     void OnTriggerExit2D(Collider2D col)
     {
-        if (IsInLayerMask(col.gameObject, playerLayers))
-            isMoving = true;
+        if (IsInLayerMask(col.gameObject, playerLayers)) isMoving = true;
 
     }
 }

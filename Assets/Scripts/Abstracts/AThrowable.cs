@@ -16,6 +16,9 @@ public abstract class AThrowable : MonoBehaviour, IThrowable
     protected int damages; //Dégâts infligés par un poke
     protected Rigidbody2D throwableRigidbody; //Le rigidbody de l'objet, pour le déplacer
     protected RaycastHit2D pokedObject; //Pour stocker les objets dans lesquels on rebondi
+    protected int score;
+
+    private InterfaceScript ui;
 
     //Initialisation
     protected void Awake()
@@ -26,6 +29,8 @@ public abstract class AThrowable : MonoBehaviour, IThrowable
 
         throwableRigidbody = gameObject.GetComponent<Rigidbody2D>();
         throwableRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+
+        ui = GameObject.Find("Canvas").GetComponent<InterfaceScript>();
     }
 
     private void FixedUpdate()
@@ -63,6 +68,8 @@ public abstract class AThrowable : MonoBehaviour, IThrowable
             ThrownMover();
             ThrownMover();
             ThrownMover();
+
+            ui.AddScore(score);
         }
     }
 

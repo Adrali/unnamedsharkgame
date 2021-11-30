@@ -11,6 +11,7 @@ public class Breaky : AThrowable
 
         speedMultiplier = 1.50f;
         damages = 2;
+        score = 5;
     }
 
     /// <summary>

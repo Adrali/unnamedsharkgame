@@ -11,6 +11,8 @@ public class Bouncy : AThrowable
 
         speedMultiplier = 0.666f;
         damages = 1;
+
+        score = 15;
     }
 
     /// <summary>

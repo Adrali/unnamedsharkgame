@@ -7,10 +7,14 @@ public class TrainingDummy : MonoBehaviour, IDamageable
     //Privates
     private int healthPoints = 3;
     private GameObject theDummy;
+    private InterfaceScript ui;
+    bool dead;
 
     private void Awake()
     {
         theDummy = gameObject;
+        ui = GameObject.Find("Canvas").GetComponent<InterfaceScript>();
+        dead = false;
     }
 
     public void TakeDamage(int damages)
@@ -21,6 +25,11 @@ public class TrainingDummy : MonoBehaviour, IDamageable
 
     void OnDeath()
     {
-        Destroy(gameObject);
+        if (!dead)
+        {
+            dead = true;
+            ui.AddScore(50);
+            Destroy(gameObject);
+        }   
     }
 }

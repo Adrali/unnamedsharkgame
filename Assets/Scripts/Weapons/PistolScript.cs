@@ -13,6 +13,12 @@ public class PistolScript : AWeapon
         playerCombat = GetComponent<PlayerCombatScript>();
         bulletPrefab = playerCombat.getBulletPrefab();
     }
+
+    private void Start()
+    {
+        playerCombat.SetAmmo(0);
+    }
+
     protected override void Shoot()
     {
         currentBullet = Instantiate(bulletPrefab);

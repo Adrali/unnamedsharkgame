@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCombatScript : APlayer, IDamageable
 {
@@ -11,12 +12,13 @@ public class PlayerCombatScript : APlayer, IDamageable
     private bool fireInput;
     private Rigidbody2D playerRigidbody; //Le rigidbody de notre personnage, pour le faire bouger
     private PlayerMovementScript playerMovement; //Le script de mouvement pour forcer le personnage à bouger
-    private int healthPoints = 1; //Le nombre de points de vie dispo pour notre perso
     private Collider2D baddieHit; //Pour stocker les ennemis touches par les bottes
     private Collider2D throwableHit; //Pour stocker les throwables qu'on touche
     private IDamageable baddieBody; //Pour stocker le component IDamageable du truc touche
     private IThrowable throwableBody; //Pour stocker le component IThrowable du truc touche
     private AWeapon currentGun;
+    private bool bulletProofVest;
+    private InterfaceScript ui;
 
     //Publique
     public LayerMask baddiesLayer; //Le layer utilisé pour les gens sur lesquels on peut taper
@@ -32,6 +34,8 @@ public class PlayerCombatScript : APlayer, IDamageable
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovementScript>();
         currentGun = GetComponent<AWeapon>();
+        bulletProofVest = false;
+        ui = GameObject.Find("Canvas").GetComponent<InterfaceScript>();
     }
 
     //Fait pour les calculs physiques
@@ -104,8 +108,17 @@ public class PlayerCombatScript : APlayer, IDamageable
     /// <param name="damages">Quantité de dégâts à infliger</param>
     public void TakeDamage(int damages)
     {
-        healthPoints -= damages;
-        if (healthPoints <= 0) OnDeath();
+        if (!isDashing)
+        {
+            if (bulletProofVest)
+            {
+                bulletProofVest = false;
+                LoseGun();
+
+                ui.AddScore(-10);
+            }
+            else OnDeath();
+        }
     }
 
     public GameObject getBulletPrefab() => bulletPrefab;
@@ -115,6 +128,27 @@ public class PlayerCombatScript : APlayer, IDamageable
     /// </summary>
     private void OnDeath()
     {
-        //A FAIRE PTDR
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void SwitchGun(int guntype)
+    {
+        bulletProofVest = true;
+        Destroy(GetComponent<AWeapon>());
+        if (guntype == 1) currentGun = gameObject.AddComponent<ShotgunScript>();
+        else currentGun = gameObject.AddComponent<SMGScript>();
+
+        ui.AddScore(20);
+    }
+
+    public void LoseGun()
+    {
+        Destroy(GetComponent<AWeapon>());
+        currentGun = gameObject.AddComponent<PistolScript>();
+    }
+
+    public void SetAmmo(int ammo)
+    {
+        ui.SetMunition(ammo);
     }
 }
