@@ -65,6 +65,7 @@ public class PlayerCombatScript : APlayer, IDamageable
                 {
                     baddieBody.TakeDamage(BootDamage);
                     playerMovement.ForceJump();
+                    audioManager.Play("Step");
                 }
             }
         }
@@ -87,6 +88,7 @@ public class PlayerCombatScript : APlayer, IDamageable
                 //... on peut le jeter
                 if (playerRigidbody.velocity.y < 0) playerMovement.ForceJump();
                 throwableBody.getThrown(playerRigidbody.position.x, playerMovement.getCurrentSpeed());
+                audioManager.Play("Step");
             }
             
         }
@@ -116,6 +118,7 @@ public class PlayerCombatScript : APlayer, IDamageable
                 LoseGun();
 
                 ui.AddScore(-10);
+                audioManager.Play("Block");
             }
             else OnDeath();
         }
@@ -128,6 +131,7 @@ public class PlayerCombatScript : APlayer, IDamageable
     /// </summary>
     private void OnDeath()
     {
+        audioManager.Play("PlayerKilled");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -147,6 +151,7 @@ public class PlayerCombatScript : APlayer, IDamageable
         }
 
         ui.AddScore(20);
+        audioManager.Play("PickUp");
     }
 
     public void LoseGun()
@@ -154,6 +159,7 @@ public class PlayerCombatScript : APlayer, IDamageable
         Destroy(GetComponent<AWeapon>());
         currentGun = gameObject.AddComponent<PistolScript>();
         animScript.SetArme(0);
+        audioManager.Play("PickUp");
     }
 
     public void SetAmmo(int ammo)

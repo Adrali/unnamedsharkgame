@@ -12,6 +12,7 @@ public abstract class AWeapon : MonoBehaviour
     protected PlayerCombatScript playerCombat;
     protected GameObject bulletPrefab;
     protected GameObject currentBullet;
+    protected AudioManagerScript audioManager;
 
     //private
     private float shootTimer;
@@ -27,6 +28,7 @@ public abstract class AWeapon : MonoBehaviour
             Shoot();
             playerCombat.Recoil();
             shootTimer = shootDelay;
+            audioManager.Play("Gunshot");
         }
     }
 
@@ -38,6 +40,7 @@ public abstract class AWeapon : MonoBehaviour
         shootInput = false;
         bulletDirection = 0;
         shootInput = false;
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManagerScript>();
     }
 
     protected abstract void Shoot();

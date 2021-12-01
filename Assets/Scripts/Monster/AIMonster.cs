@@ -18,6 +18,7 @@ public class AIMonster : MonoBehaviour
     bool isAttacking;
     float countdownTimer, attackTimer;
     Collider2D target;
+    SpriteRenderer sprite;
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class AIMonster : MonoBehaviour
         countdownTimer = 0f;
         attackTimer = 1f;
         target = null;
+        sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     private bool IsInLayerMask(GameObject obj, LayerMask layerMask)
@@ -47,7 +49,7 @@ public class AIMonster : MonoBehaviour
         localScale = bottomArea.localPosition;
         localScale.x *= -1;
         bottomArea.localPosition = localScale;
-       
+        sprite.flipX = !sprite.flipX;
     }
     // Update is called once per frame
     void Update()

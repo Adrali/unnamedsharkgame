@@ -53,28 +53,30 @@
     <UnityVersion>2020.3.18f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\UI\InterfaceScript.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerCombatScript.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovementScript.cs" />
+    <Compile Include="Assets\Scripts\Environment\EndOfLevelScript.cs" />
     <Compile Include="Assets\Scripts\Abstracts\AWeapon.cs" />
     <Compile Include="Assets\Scripts\Weapons\BulletScript.cs" />
     <Compile Include="Assets\Scripts\Baddies\TrainingDummy.cs" />
     <Compile Include="Assets\Scripts\Environment\Breaky.cs" />
+    <Compile Include="Assets\Scripts\Environment\AmmoCrate.cs" />
     <Compile Include="Assets\Scripts\Abstracts\APlayer.cs" />
     <Compile Include="Assets\Scripts\Abstracts\AThrowable.cs" />
+    <Compile Include="Assets\SiorcPackage\ArmeChanger.cs" />
     <Compile Include="Assets\Scripts\Weapons\PistolScript.cs" />
     <Compile Include="Assets\Scripts\Environment\Bouncy.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IThrowable.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamageable.cs" />
+    <Compile Include="Assets\Scripts\Environment\DeathBox.cs" />
     <Compile Include="Assets\Scripts\Weapons\SMGScript.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerInputScript.cs" />
     <Compile Include="Assets\Scripts\Weapons\ShotgunScript.cs" />
     <Compile Include="Assets\Scripts\Monster\AIMonster.cs" />
-    <Compile Include="Assets\Scripts\Environment\AmmoCrate.cs" />
-    <Compile Include="Assets\Scripts\UI\InterfaceScript.cs" />
-    <Compile Include="Assets\Scripts\Environment\DeathBox.cs" />
-    <Compile Include="Assets\Scripts\Environment\EndOfLevelScript.cs" />
-    <Compile Include="Assets\SiorcPackage\ArmeChanger.cs" />
+    <Compile Include="Assets\Scripts\Environment\AudioManagerScript.cs" />
+    <Compile Include="Assets\Scripts\Environment\Sound.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -143,6 +143,7 @@ public class PlayerMovementScript : APlayer
         playerRigidbody.velocity = Vector2.zero;
         dashTimer = 0f;
         dashToken = false;
+        audioManager.Play("Step");
     }
 
     /// <summary>
@@ -228,6 +229,7 @@ public class PlayerMovementScript : APlayer
         isJumping = true;
         if(!isGrounded) jumpToken = false;
         animScript.SetSaut(true);
+        audioManager.Play("Step");
     }
 
     /// <summary>

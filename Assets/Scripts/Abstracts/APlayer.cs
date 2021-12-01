@@ -17,6 +17,7 @@ public abstract class APlayer : MonoBehaviour
     protected float xInput; //Input A/D
     protected int lastXInput; //Memorise le dernier input horizontal, si celui-ci est different de 0
     protected ArmeChanger animScript;
+    protected AudioManagerScript audioManager;
 
     //Publics
     public Transform playerBackFeet, playerFrontFeet; //Bas du sprite, pour check contact avec le sol. On en a 2, un pour l'avant et l'autre pour l'arriere
@@ -33,6 +34,7 @@ public abstract class APlayer : MonoBehaviour
         xInput = 0f;
         lastXInput = 1;
         animScript = GetComponentInChildren<ArmeChanger>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManagerScript>();
     }
 
     /// <summary>
